@@ -1,10 +1,7 @@
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -24,6 +21,18 @@ public class FileConnector {
     private String description;
     private Double money;
     int count=0;
+    String fileSep=System.getProperty("file.separator");
+    File jar=new File(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+    String jarPath=jar.getAbsoluteFile().getParentFile().getAbsolutePath()+fileSep;
+    File file = new File(jarPath+"expense.txt");
+    public FileConnector() {
+        try {
+            file.createNewFile();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public String getId() {
         return id;
@@ -36,8 +45,10 @@ public class FileConnector {
     ObservableList<Account>account= FXCollections.observableArrayList();
     public String readAccountFile() {
         try {
-            Path file = Paths.get("ExpenseFX\\expense.txt");
-            BufferedReader reader = Files.newBufferedReader(file, StandardCharsets.UTF_8);
+
+           // Path file = Paths.get("C:\\Users\\User\\IdeaProjects\\ExpenseFX\\expense.txt");
+            //BufferedReader reader = Files.newBufferedReader(file, StandardCharsets.UTF_8);
+            BufferedReader reader = new BufferedReader(new FileReader(file));
             while ((line=reader.readLine())!=null){
 
                 //System.out.println(line);
@@ -51,7 +62,7 @@ public class FileConnector {
     }
     public void writeBalanceFile(Account account) {
         try {
-            File file = new File("ExpenseFX\\expense.txt");
+            //File file = new File("C:\\Users\\User\\IdeaProjects\\ExpenseFX\\expense.txt");
             FileWriter writer = new FileWriter(file, true); // true จะเขียนต่อท้ายไฟล์
             writer.write(account.getId()+" "+account.getDay()+" "+account.getCata()
                     +" "+account.getDescription()+" "+account.getShowMoney()+" "+account.getMoney()+ System.getProperty("line.separator"));//เขียนละขึ้นบรรทัดใหม่
@@ -88,8 +99,9 @@ public class FileConnector {
     }
     public void editInput(String number){
         try {
-            Path file = Paths.get("ExpenseFX\\expense.txt");
-            BufferedReader reader = Files.newBufferedReader(file, StandardCharsets.UTF_8);
+            //Path file = Paths.get("C:\\Users\\User\\IdeaProjects\\ExpenseFX\\expense.txt");
+            //BufferedReader reader = Files.newBufferedReader(file, StandardCharsets.UTF_8);
+            BufferedReader reader = new BufferedReader(new FileReader(file));
             while ((line=reader.readLine())!=null){
                 count++;
                 if(line.isEmpty()){
@@ -107,7 +119,7 @@ public class FileConnector {
                         this.balanceMoney=balance.getBalance();
                         this.balanceMoneyIncome=balance.getBalanceIncome();
                         this.balanceMoneyOutcome=balance.getBalanceOutcome();
-                        File file1 = new File("ExpenseFX\\expense.txt");
+                        File file1 = new File("C:\\Users\\User\\IdeaProjects\\ExpenseFX\\expense.txt");
                         if(count==1){
                             FileWriter writer = new FileWriter(file1, false); // true จะเขียนต่อท้ายไฟล์
                             writer.write(strings[0]+" "+day+" "+cata+" "+description+" "+String.valueOf(strings[4].charAt(0))+money+" "+money+ System.getProperty("line.separator"));//เขียนละขึ้นบรรทัดใหม่
@@ -128,7 +140,7 @@ public class FileConnector {
                         this.balanceMoney=balance.getBalance();
                         this.balanceMoneyIncome=balance.getBalanceIncome();
                         this.balanceMoneyOutcome=balance.getBalanceOutcome();
-                        File file1 = new File("ExpenseFX\\expense.txt");
+                        File file1 = new File("C:\\Users\\User\\IdeaProjects\\ExpenseFX\\expense.txt");
                         if(count==1){
                             FileWriter writer = new FileWriter(file1, false); // true จะเขียนต่อท้ายไฟล์
                             writer.write(strings[0]+" "+strings[1]+" "+strings[2]
@@ -163,8 +175,9 @@ public class FileConnector {
         int loop=1;
         try {
 
-            Path file = Paths.get("ExpenseFX\\expense.txt");
-            BufferedReader reader = Files.newBufferedReader(file, StandardCharsets.UTF_8);
+            //Path file = Paths.get("C:\\Users\\User\\IdeaProjects\\ExpenseFX\\expense.txt");
+            //BufferedReader reader = Files.newBufferedReader(file, StandardCharsets.UTF_8);
+            BufferedReader reader = new BufferedReader(new FileReader(file));
             while ((line=reader.readLine())!=null){
                 if(line.isEmpty()){
 
